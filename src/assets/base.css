@@ -1,4 +1,10 @@
-:root{
+:root {
+  --color-primary: #2563eb;
+  --color-secondary: #facc15;
+  --color-bg: #f8fafc;
+  --color-text: #1e293b;
+  --color-card: #ffffff;
+  --color-border: #e2e8f0;
   --bg: #545454;
   --header: #323232;
   --surface: #656565;
