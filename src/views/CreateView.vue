@@ -13,7 +13,7 @@ const cards = ref([])
 
 function addCard(card: { frage: string; antwort: string }) {
   cards.value.push({ id: Date.now(), ...card })
-  alert('Karte hinzugefügt! 🎉')
+  alert('Karte hinzugefügt!')
 }
 </script>
 

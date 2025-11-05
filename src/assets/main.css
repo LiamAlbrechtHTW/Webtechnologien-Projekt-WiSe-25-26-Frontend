@@ -1,24 +1,5 @@
-/* css */
-/* Dark theme: Grau-Grundtöne + blaue Akzente */
-:root{
-  --bg: #545454;
-  --header: #323232;        /* Kopfzeile */
-  --surface: #656565;       /* Karten / Panels */
-  --surface-2: #696969;     /* Sekundäre Flächen */
-  --muted: #9aa3ab;         /* Nebentext */
-  --text: #e6eef6;          /* Haupttext (hell) */
-  --border: #26292d;        /* feine Linien */
-  --accent: #177fb3;        /* primärer Akzent (blau/teal) */
-  --accent-strong: #0f5f86;
-  --accent-light: #00abff;
-  --success: #41b883;       /* optional (grün aus original svg) */
-  --yellow: #f2c94c;        /* Stern / warme Akzentfarbe */
-  --radius: 10px;
-  --gap: 1rem;
-  --glass: rgba(255,255,255,0.03);
-}
 
-/* Grundlayout */
+
 html, body, #app {
   height: 100%;
   margin: 0;
@@ -29,7 +10,7 @@ html, body, #app {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* App container (bestehende Regeln beibehalten / überschreiben) */
+
 #app {
   display: flex;
   flex-direction: column;
@@ -37,7 +18,7 @@ html, body, #app {
   gap: var(--gap);
 }
 
-/* Main / Content */
+
 main {
   flex: 1;
   display: flex;
@@ -49,7 +30,7 @@ main {
   background: #545454;
 }
 
-/* Karten und Panels */
+
 .card {
   background: linear-gradient(180deg, var(--surface), var(--surface-2));
   border: 1px solid var(--border);
@@ -58,19 +39,19 @@ main {
   box-shadow: 0 6px 18px rgba(2,6,10,0.6);
 }
 
-/* Kopfleiste / Header */
+
 .header {
-  height: 80px;              /* feste Header-Höhe */
+  height: 80px;
   display: flex;
-  align-items: center;       /* vertikal zentriert */
+  align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
-  overflow: hidden;          /* verhindert, dass Inhalt den Header vergrößert */
+  overflow: hidden;
   box-sizing: border-box;
   background: var(--header);
 }
 
-/* Typografie */
+
 h1,h2,h3 {
   color: var(--text);
   margin: 0;
@@ -79,7 +60,7 @@ p, span, label {
   color: var(--muted);
 }
 
-/* Links und Buttons (Akzentfarbe) */
+
 a, .btn {
   color: var(--accent);
   text-decoration: none;
@@ -90,7 +71,7 @@ a:hover, .btn:hover {
   transform: translateY(-1px);
 }
 
-/* Primärer Button */
+
 .btn-primary {
   background: linear-gradient(180deg, var(--accent), var(--accent-strong));
   color: white;
@@ -102,14 +83,14 @@ a:hover, .btn:hover {
 }
 .btn-primary:active { transform: translateY(0); box-shadow: 0 4px 12px rgba(0,0,0,0.6); }
 
-/* Sekundär / Ghost */
+
 .btn-ghost {
   background: transparent;
   border: 1px solid rgba(255,255,255,0.04);
   color: var(--muted);
 }
 
-/* Input / Form */
+
 input, textarea, select {
   background: var(--glass);
   color: var(--text);
@@ -123,19 +104,18 @@ input:focus, textarea:focus {
   box-shadow: 0 0 0 4px rgba(23,127,179,0.08);
 }
 
-/* kleine UI-Elemente */
+
 .kv {
   color: var(--muted);
   font-size: 0.9rem;
 }
 
-/* Logo-Tinting: falls das SVG inline oder als background verwendet wird.
-   Bei externem SVG kann man filter oder mask benutzen – hier einfache Anweisung: */
+
 .logo {
   filter: drop-shadow(0 6px 18px rgba(0,0,0,0.6));
 }
 
-/* Utilities */
+
 .container {
   width: 100%;
   max-width: 1100px;
@@ -143,7 +123,7 @@ input:focus, textarea:focus {
   padding: 0 1rem;
 }
 
-/* Responsive Feinheiten */
+
 @media (max-width: 640px) {
   :root { --gap: 0.75rem; }
   .card { padding: 0.9rem; }

@@ -1,10 +1,19 @@
-:root {
-  --color-primary: #2563eb; /* Blau passend zum Logo */
-  --color-secondary: #facc15; /* Gelb (Stern) */
-  --color-bg: #f8fafc;
-  --color-text: #1e293b;
-  --color-card: #ffffff;
-  --color-border: #e2e8f0;
+:root{
+  --bg: #545454;
+  --header: #323232;
+  --surface: #656565;
+  --surface-2: #7d7d7d;
+  --muted: #9aa3ab;
+  --text: #e6eef6;
+  --border: #26292d;
+  --accent: #177fb3;
+  --accent-strong: #0f5f86;
+  --accent-light: #00abff;
+  --success: #41b883;
+  --yellow: #f2c94c;
+  --radius: 10px;
+  --gap: 1rem;
+  --glass: rgba(255,255,255,0.03);
 }
 
 body {

@@ -1,7 +1,7 @@
 <template>
   <section class="learn">
     <h1>Lernmodus</h1>
-    <p>Hier kannst du deine Karteikarten lernen (kommt später 😉)</p>
+    <p>Hier kannst du deine Karteikarten lernen (WIP)</p>
   </section>
 </template>
 

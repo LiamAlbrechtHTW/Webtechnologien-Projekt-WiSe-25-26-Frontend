@@ -17,7 +17,7 @@ import { ref } from 'vue'
 const frage = ref('')
 const antwort = ref('')
 
-// ✅ Typsichere Definition des Events + Payload
+
 const emit = defineEmits<{
   (e: 'add-card', card: { frage: string; antwort: string }): void
 }>()
@@ -32,7 +32,7 @@ function submit() {
 
 <style scoped>
 .form {
-  background: var(--color-card);
+  background: var(--surface-2);
   border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 1.5rem;
