@@ -9,13 +9,20 @@
 import { ref } from 'vue'
 import CardForm from '../components/CardForm.vue'
 
-const cards = ref([])
+interface Card {
+  id: number
+  frage: string
+  antwort: string
+}
+
+const cards = ref<Card[]>([])
 
 function addCard(card: { frage: string; antwort: string }) {
   cards.value.push({ id: Date.now(), ...card })
   alert('Karte hinzugefügt!')
 }
 </script>
+
 
 <style scoped>
 .create {
