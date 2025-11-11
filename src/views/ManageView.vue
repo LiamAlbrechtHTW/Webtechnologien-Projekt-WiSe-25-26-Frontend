@@ -22,7 +22,7 @@ const error = ref<string | null>(null)
 onMounted(async () => {
   try {
     const res = await fetch(API_URL)
-    if (!res.ok) throw new Error(HTTP ${res.status})
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
     cards.value = await res.json()
   } catch (err: any) {
     console.error('Fehler beim Laden:', err)
