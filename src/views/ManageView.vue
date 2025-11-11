@@ -1,4 +1,5 @@
-<template>
+
+ManageView: <template>
   <section class="manage">
     <h1>Karteikarten verwalten</h1>
     <CardList :cards="cards" @delete-card="deleteCard" />
@@ -6,13 +7,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import CardList from '../components/CardList.vue'
+const API_URL = 'https://webtechnologien-projekt-wise-25-26.onrender.com/apis/cards'
 
-const cards = ref([
-  { id: 1, frage: 'Was ist Vue.js?', antwort: 'Ein JavaScript-Framework für Benutzeroberflächen.' },
-  { id: 2, frage: 'Was macht v-for?', antwort: 'Rendert Listen dynamisch aus Arrays.' },
-])
+interface Card {
+  id: number
+  frage: string
+  antwort: string
+}
+const cards = ref<Card[]>([])
+const error = ref<string | null>(null)
+
+onMounted(async () => {
+  try {
+    const res = await fetch(API_URL)
+    if (!res.ok) throw new Error(HTTP ${res.status})
+    cards.value = await res.json()
+  } catch (err: any) {
+    console.error('Fehler beim Laden:', err)
+    error.value = 'Karten konnten nicht geladen werden.'
+  }
+})
 
 function deleteCard(id: number) {
   cards.value = cards.value.filter(c => c.id !== id)
