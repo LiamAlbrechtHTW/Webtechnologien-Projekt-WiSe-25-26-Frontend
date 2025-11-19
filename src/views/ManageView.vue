@@ -1,25 +1,38 @@
-
-ManageView: <template>
+<template>
   <section class="manage">
     <h1>Karteikarten verwalten</h1>
-    <CardList :cards="cards" @delete-card="deleteCard" />
+
+    <div v-if="loading" class="status">Karten werden geladen...</div>
+    <div v-else-if="error" class="status error">{{ error }}</div>
+    <CardList
+      v-else
+      :cards="cards"
+      @delete-card="deleteCard"
+    />
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import CardList from '../components/CardList.vue'
-const API_URL = 'https://webtechnologien-projekt-wise-25-26.onrender.com/apis/cards'
 
-interface Card {
+interface Karteikarte {
   id: number
   frage: string
   antwort: string
 }
-const cards = ref<Card[]>([])
+
+
+const API_URL = import.meta.env.VITE_BACKEND_BASE_URL + '/api/cards'
+
+const cards = ref<Karteikarte[]>([])
+const loading = ref(true)
 const error = ref<string | null>(null)
 
-onMounted(async () => {
+
+async function loadCards() {
+  loading.value = true
+  error.value = null
   try {
     const res = await fetch(API_URL)
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -27,12 +40,24 @@ onMounted(async () => {
   } catch (err: any) {
     console.error('Fehler beim Laden:', err)
     error.value = 'Karten konnten nicht geladen werden.'
+  } finally {
+    loading.value = false
   }
-})
-
-function deleteCard(id: number) {
-  cards.value = cards.value.filter(c => c.id !== id)
 }
+
+async function deleteCard(id: number) {
+  try {
+    const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    cards.value = cards.value.filter(c => c.id !== id)
+  } catch (err) {
+    console.error('Fehler beim Löschen:', err)
+    alert('Karte konnte nicht gelöscht werden.')
+  }
+}
+
+
+onMounted(loadCards)
 </script>
 
 <style scoped>
@@ -49,5 +74,15 @@ h1 {
   text-align: center;
   margin-bottom: 1.5rem;
   color: var(--text);
+}
+
+.status {
+  text-align: center;
+  color: var(--muted);
+  margin: 2rem 0;
+}
+
+.status.error {
+  color: #ff6b6b;
 }
 </style>
