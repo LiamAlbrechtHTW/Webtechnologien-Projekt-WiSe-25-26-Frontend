@@ -47,12 +47,16 @@ async function loadCards() {
 
 async function deleteCard(id: number) {
   try {
-    const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    cards.value = cards.value.filter(c => c.id !== id)
+    const res = await fetch(`${API_URL}/${id}`, {
+      method: 'DELETE',
+    })
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`)
+    }
+    cards.value = cards.value.filter(card => card.id !== id)
   } catch (err) {
     console.error('Fehler beim Löschen:', err)
-    alert('Karte konnte nicht gelöscht werden.')
+    alert('Karteikarte konnte nicht gelöscht werden.')
   }
 }
 
