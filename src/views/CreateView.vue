@@ -6,7 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import CardForm from '../components/CardForm.vue'
 
 interface Card {
@@ -15,11 +14,30 @@ interface Card {
   antwort: string
 }
 
-const cards = ref<Card[]>([])
+const API_URL = import.meta.env.VITE_BACKEND_BASE_URL + '/api/cards'
 
-function addCard(card: { frage: string; antwort: string }) {
-  cards.value.push({ id: Date.now(), ...card })
-  alert('Karte hinzugefügt!')
+async function addCard(card: { frage: string; antwort: string }) {
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(card),
+    })
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`)
+    }
+
+    const savedCard: Card = await res.json()
+
+    console.log('Gespeichert in DB:', savedCard)
+    alert('Karteikarte erfolgreich gespeichert!')
+  } catch (err) {
+    console.error('Fehler beim Speichern:', err)
+    alert('Karteikarte konnte nicht gespeichert werden.')
+  }
 }
 </script>
 
