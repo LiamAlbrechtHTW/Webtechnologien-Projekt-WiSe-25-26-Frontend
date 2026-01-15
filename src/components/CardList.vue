@@ -1,13 +1,13 @@
 <template>
   <section class="list">
-    <h2>Karteikarten</h2>
     <div v-if="cards.length === 0" class="empty">Noch keine Karten vorhanden.</div>
     <div v-else class="grid">
       <CardItem
           v-for="card in cards"
           :key="card.id"
           :card="card"
-          @delete-card="$emit('delete-card', card.id)"
+          @delete-card="$emit('delete-card', $event)"
+          @edit-card="$emit('edit-card', $event)"
       />
     </div>
   </section>

@@ -20,6 +20,12 @@
   margin: 8rem auto 2rem;
   box-shadow: 20px 20px 20px rgba(0,0,0,0.05);
 }
+
+h1 {
+  color: #f4cf0f;
+  margin-bottom: 1.5rem;
+}
+
 .nav {
   display: flex;
   justify-content: center;
@@ -38,9 +44,4 @@
   color: var(--accent-light);
 }
 
-.active {
-  border-bottom: 2px solid var(--accent);
-}
 </style>
-<script setup lang="ts">
-</script>

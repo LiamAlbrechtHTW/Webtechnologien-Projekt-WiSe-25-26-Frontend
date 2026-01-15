@@ -44,17 +44,20 @@ async function addCard(card: { frage: string; antwort: string }) {
 
 <style scoped>
 .create {
-  max-width: 1000px;
+  max-width: 2000px;
+  width: 900px;
+  height: 600px;
   margin: 8rem auto 3rem;
   background: var(--surface);
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 }
 
+
 h1 {
-  color: var(--text);
+  color: #f4cf0f;
   margin-bottom: 1.5rem;
+  text-align: center;
 }
 </style>
