@@ -1,11 +1,14 @@
 <template>
   <header class="header">
     <div class="left">
-      <img src="@/assets/logo.png" alt="Logo" class="logo" />
+      <RouterLink to="/" class="logo-link">
+        <img src="@/assets/logo.png" alt="Logo" class="logo" />
+      </RouterLink>
       <h1>Karteikarten-Lernsystem</h1>
     </div>
+
     <nav class="nav">
-      <RouterLink to="/" exact-active-class="active">Home</RouterLink>
+      <RouterLink to="/home" exact-active-class="active">Home</RouterLink>
       <RouterLink to="/create" exact-active-class="active">Erstellen</RouterLink>
       <RouterLink to="/manage" exact-active-class="active">Verwalten</RouterLink>
       <RouterLink to="/learn" exact-active-class="active">Lernen</RouterLink>
@@ -13,12 +16,13 @@
   </header>
 </template>
 
+
 <style scoped>
 .header {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;              /* über gesamte Bildschirmbreite */
+  width: 100vw;
   height: 80px;
   background: var(--header);
   display: flex;
@@ -58,9 +62,19 @@
   color: var(--accent-light);
 }
 
-.active {
-  border-bottom: 2px solid var(--accent);
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
+
+.logo-link:hover h1 {
+  color: var(--accent-light);
+}
+
 </style>
 <script setup lang="ts">
 </script>

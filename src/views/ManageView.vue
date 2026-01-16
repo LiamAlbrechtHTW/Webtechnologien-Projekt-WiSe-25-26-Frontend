@@ -30,7 +30,7 @@
     <CardList
       v-else
       :cards="cards"
-      @delete-card="deleteCard"
+      @delete-card="handleDeleteCard"
       @edit-card="startEdit"
     />
   </section>
@@ -38,6 +38,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { getActiveSessionId } from '../session'
 import CardList from '../components/CardList.vue'
 
 interface Karteikarte {
@@ -46,7 +48,21 @@ interface Karteikarte {
   antwort: string
 }
 
-const API_URL = import.meta.env.VITE_BACKEND_BASE_URL + '/api/cards'
+const router = useRouter()
+
+function requireSessionId(): number {
+  const sessionId = getActiveSessionId()
+  if (!sessionId) {
+    router.push('/')
+    throw new Error('No active session selected')
+  }
+  return sessionId
+}
+
+function cardsApiUrl(): string {
+  const sessionId = requireSessionId()
+  return import.meta.env.VITE_BACKEND_BASE_URL + `/api/sessions/${sessionId}/cards`
+}
 
 const cards = ref<Karteikarte[]>([])
 const editingCard = ref<Karteikarte | null>(null)
@@ -56,6 +72,7 @@ const editAntwort = ref('')
 
 async function loadCards() {
   try {
+    const API_URL = cardsApiUrl()
     const res = await fetch(API_URL)
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const data: Karteikarte[] = await res.json()
@@ -66,8 +83,9 @@ async function loadCards() {
   }
 }
 
-async function deleteCard(id: number) {
+async function handleDeleteCard(id: number) {
   try {
+    const API_URL = cardsApiUrl()
     const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     cards.value = cards.value.filter(c => c.id !== id)
@@ -100,6 +118,7 @@ async function saveEdit() {
   const id = editingCard.value.id
 
   try {
+    const API_URL = cardsApiUrl()
     const res = await fetch(`${API_URL}/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },

@@ -2,13 +2,28 @@
   <section class="home">
     <h1>Willkommen beim Karteikarten-Lernsystem</h1>
     <p>Hier kannst du Karteikarten erstellen, verwalten und lernen.</p>
+
     <nav class="nav">
-      <RouterLink to="/create" exact-active-class="active">Erstellen</RouterLink>
-      <RouterLink to="/manage" exact-active-class="active">Verwalten</RouterLink>
-      <RouterLink to="/learn" exact-active-class="active">Lernen</RouterLink>
+      <router-link to="/create">Erstellen</router-link>
+      <router-link to="/manage">Verwalten</router-link>
+      <router-link to="/learn">Lernen</router-link>
+
+      <a class="switch" href="#" @click.prevent="changeSession">Session wechseln</a>
     </nav>
   </section>
 </template>
+
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+import { clearActiveSessionId } from '../session'
+
+const router = useRouter()
+
+function changeSession() {
+  clearActiveSessionId()
+  router.push('/')
+}
+</script>
 
 <style scoped>
 .home {
@@ -16,7 +31,8 @@
   border-radius: 12px;
   text-align: center;
   padding: 2rem 2rem 2rem;
-  max-width: 1200px;
+  max-width: 900px;
+  width: 100%;
   margin: 8rem auto 2rem;
   box-shadow: 20px 20px 20px rgba(0,0,0,0.05);
 }
@@ -31,6 +47,7 @@ h1 {
   justify-content: center;
   gap: 2rem;
   margin-top: 2rem;
+  flex-wrap: wrap;
 }
 
 .nav a {
@@ -44,4 +61,7 @@ h1 {
   color: var(--accent-light);
 }
 
+.switch {
+  opacity: 0.85;
+}
 </style>

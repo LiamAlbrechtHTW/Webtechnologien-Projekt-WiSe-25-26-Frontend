@@ -24,7 +24,6 @@ const antwortEl = ref<HTMLElement | null>(null)
  * Funktioniert zuverlässig, weil wir eine feste Höhe für die Textzone vorgeben.
  */
 function fitText(el: HTMLElement, minPx: number, maxPx: number) {
-  // Startwert
   el.style.fontSize = `${maxPx}px`
 
   let size = maxPx
@@ -128,10 +127,10 @@ button {
   border-radius: 6px;
   padding: 0.4rem 0.8rem;
   cursor: pointer;
-  transition: 0.2s;
   color: white;
   border: none;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 
 button.edit {
@@ -139,14 +138,16 @@ button.edit {
 }
 
 button.edit:hover {
-  background: #2563eb;
+  background: #2165d3;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.35);
 }
 
 button.delete {
-  background: indianred;
+  background: #cd5c5c;
 }
 
 button.delete:hover {
-  background: #d77c7c;
+  background: #a94444;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.35);
 }
 </style>

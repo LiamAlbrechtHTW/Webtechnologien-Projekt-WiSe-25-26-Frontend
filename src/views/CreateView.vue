@@ -7,6 +7,8 @@
 
 <script setup lang="ts">
 import CardForm from '../components/CardForm.vue'
+import { useRouter } from 'vue-router'
+import { getActiveSessionId } from '../session'
 
 interface Card {
   id: number
@@ -14,10 +16,23 @@ interface Card {
   antwort: string
 }
 
-const API_URL = import.meta.env.VITE_BACKEND_BASE_URL + '/api/cards'
+const router = useRouter()
+
+function requireSessionId(): number {
+  const sessionId = getActiveSessionId()
+  if (!sessionId) {
+    router.push('/')
+    throw new Error('No active session selected')
+  }
+  return sessionId
+}
 
 async function addCard(card: { frage: string; antwort: string }) {
   try {
+    const sessionId = requireSessionId()
+    const API_URL =
+      import.meta.env.VITE_BACKEND_BASE_URL + `/api/sessions/${sessionId}/cards`
+
     const res = await fetch(API_URL, {
       method: 'POST',
       headers: {
@@ -26,12 +41,9 @@ async function addCard(card: { frage: string; antwort: string }) {
       body: JSON.stringify(card),
     })
 
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`)
-    }
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
 
     const savedCard: Card = await res.json()
-
     console.log('Gespeichert in DB:', savedCard)
     alert('Karteikarte erfolgreich gespeichert!')
   } catch (err) {
@@ -40,7 +52,6 @@ async function addCard(card: { frage: string; antwort: string }) {
   }
 }
 </script>
-
 
 <style scoped>
 .create {
@@ -53,7 +64,6 @@ async function addCard(card: { frage: string; antwort: string }) {
   padding: 2rem;
   box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 }
-
 
 h1 {
   color: #f4cf0f;

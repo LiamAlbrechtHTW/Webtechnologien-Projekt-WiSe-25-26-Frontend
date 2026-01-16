@@ -1,17 +1,31 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
+import SessionSelectView from '../views/SessionSelectView.vue'
 import HomeView from '../views/HomeView.vue'
-import LearnView from '../views/LearnView.vue'
 import CreateView from '../views/CreateView.vue'
 import ManageView from '../views/ManageView.vue'
+import LearnView from '../views/LearnView.vue'
+
+import { getActiveSessionId } from '../session'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
-    { path: '/', name: 'home', component: HomeView },
-    { path: '/learn', name: 'learn', component: LearnView },
-    { path: '/create', name: 'create', component: CreateView },
-    { path: '/manage', name: 'manage', component: ManageView },
+    { path: '/', component: SessionSelectView },
+    { path: '/home', component: HomeView },
+    { path: '/create', component: CreateView },
+    { path: '/manage', component: ManageView },
+    { path: '/learn', component: LearnView },
   ],
+})
+
+router.beforeEach((to) => {
+  if (to.path === '/') return true
+
+  const sessionId = getActiveSessionId()
+  if (!sessionId) return '/'
+
+  return true
 })
 
 export default router

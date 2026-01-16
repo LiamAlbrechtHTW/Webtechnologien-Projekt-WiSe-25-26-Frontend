@@ -106,7 +106,7 @@ function submit() {
 .card-form button {
   align-self: flex-end;
   background: #c2e184;
-  border: 1px solid #c2e184;
+  border: none;
   color: #1f2937;
   border-radius: 6px;
   padding: 0.4rem 1.2rem;
@@ -117,7 +117,7 @@ function submit() {
 }
 
 .card-form button:hover {
-  background: #e5f3cc;
+  background: #a1c558;
   box-shadow: 0 6px 14px rgba(0,0,0,0.35);
 }
 </style>

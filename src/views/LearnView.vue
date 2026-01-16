@@ -13,7 +13,6 @@
       </div>
 
       <div v-else class="card">
-
         <div class="learning-progress">
           <div class="lp-top">
             <span class="lp-label">Lernfortschritt</span>
@@ -70,6 +69,8 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { getActiveSessionId } from '../session'
 
 interface Karteikarte {
   id: number
@@ -77,7 +78,21 @@ interface Karteikarte {
   antwort: string
 }
 
-const API_URL = import.meta.env.VITE_BACKEND_BASE_URL + '/api/cards'
+const router = useRouter()
+
+function requireSessionId(): number {
+  const sessionId = getActiveSessionId()
+  if (!sessionId) {
+    router.push('/')
+    throw new Error('No active session selected')
+  }
+  return sessionId
+}
+
+function cardsApiUrl(): string {
+  const sessionId = requireSessionId()
+  return import.meta.env.VITE_BACKEND_BASE_URL + `/api/sessions/${sessionId}/cards`
+}
 
 const loading = ref(true)
 const error = ref<string | null>(null)
@@ -89,7 +104,6 @@ const showAnswer = ref(false)
 const total = computed(() => pot.value.length + done.value.length)
 const current = computed(() => pot.value[0])
 
-/* ✅ Lernfortschritt (nur "richtig" = done) */
 const finishedCount = computed(() => done.value.length)
 const progressPercent = computed(() => {
   if (total.value === 0) return 0
@@ -139,6 +153,7 @@ async function loadCards() {
   loading.value = true
   error.value = null
   try {
+    const API_URL = cardsApiUrl()
     const res = await fetch(API_URL)
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const data: Karteikarte[] = await res.json()
@@ -226,7 +241,7 @@ onBeforeUnmount(() => {
   background: var(--surface);
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
 h1 {
@@ -252,7 +267,6 @@ h1 {
   padding: 1.5rem;
   height: 425px;
 }
-
 
 .learning-progress {
   margin: 0 0 0.9rem;
@@ -368,7 +382,6 @@ h1 {
   line-height: 1.05;
   letter-spacing: -0.01em;
 }
-
 
 .hint {
   position: absolute;
