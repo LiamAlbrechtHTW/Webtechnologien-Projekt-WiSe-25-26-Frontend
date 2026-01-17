@@ -119,6 +119,10 @@ h1 {
   box-sizing: border-box;
 }
 
+.new-session input::placeholder {
+  color: var(--muted);
+}
+
 .status { text-align: center; color: var(--muted); }
 .status.error { color: #ff6b6b; }
 .empty { text-align: center; color: var(--muted); }
