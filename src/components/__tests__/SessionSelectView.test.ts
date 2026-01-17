@@ -54,7 +54,7 @@ describe('SessionSelectView', () => {
   it('setzt aktive Session und navigiert zu /home beim Klick auf Sessionname', async () => {
     render(SessionSelectView)
 
-    const title = (await screen.findAllByText('Mathe'))[0]
+    const title = await screen.findByText('Mathe')
     await fireEvent.click(title)
 
     expect(setActiveSessionIdMock).toHaveBeenCalledWith(1)
